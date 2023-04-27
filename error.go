@@ -18,22 +18,18 @@ type Error struct {
 	Line int    `json:"line"`
 }
 
-type Option func(*Error) bool
+// type Option func(*Error) bool
+type Option func(*Error)
 
 func Msg(msg string) Option {
-	return func(e *Error) bool {
+	return func(e *Error) {
 		e.Msg = msg
-		return true
 	}
 }
 
 func Skip(skip int) Option {
-	return func(e *Error) bool {
-		if skip >= 0 {
-			e.Skip = skip
-			return true
-		}
-		return false
+	return func(e *Error) {
+		e.Skip = skip
 	}
 }
 
@@ -44,7 +40,7 @@ func NewError(cause error, codeInt int, codeStr string, opts ...Option) (err *Er
 
 	err = &Error{Cause: cause, CodeInt: codeInt, CodeStr: codeStr, Msg: "...", Skip: 1}
 	for _, v := range opts {
-		_ = v(err)
+		v(err)
 	}
 
 	if err.Skip < 0 {
