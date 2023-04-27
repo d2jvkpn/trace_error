@@ -42,7 +42,7 @@ func NewError(cause error, codeInt int, codeStr string, opts ...Option) (err *Er
 		return nil
 	}
 
-	err = &Error{Cause: cause, CodeInt: codeInt, CodeStr: codeStr, Msg: "", Skip: 1}
+	err = &Error{Cause: cause, CodeInt: codeInt, CodeStr: codeStr, Msg: "...", Skip: 1}
 	for _, v := range opts {
 		_ = v(err)
 	}
