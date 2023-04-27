@@ -79,7 +79,7 @@ func (err *Error) UpdateTrace() bool {
 /*
 func (err *Error) Error() string {
 	return fmt.Sprintf(
-		"Cause: %q, CodeInt: %d, CodeStr: %q, Msg: %q",
+		"cause: %q, code_int: %d, code_str: %q, msg: %q",
 		err.Cause.Error(), err.CodeInt, err.CodeStr, err.Msg,
 	)
 }
@@ -87,14 +87,14 @@ func (err *Error) Error() string {
 
 func (err *Error) String() string {
 	return fmt.Sprintf(
-		"Cause: %q, CodeInt: %d, CodeStr: %q, Msg: %q",
+		"cause: %q, code_int: %d, code_str: %q, msg: %q",
 		err.Cause.Error(), err.CodeInt, err.CodeStr, err.Msg,
 	)
 }
 
 func (err *Error) Trace() string {
 	return fmt.Sprintf(
-		"Skip: %d, Fn: %s, File: %q, Line: %d",
+		"skip: %d, fn: %s, file: %q, line: %d",
 		err.Skip, err.Fn, err.File, err.Line,
 	)
 }
