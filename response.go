@@ -13,15 +13,15 @@ type Response struct {
 	Data      any    `json:"data"`
 }
 
-func (res Response) MarshalJSON() ([]byte, error) {
+func (res *Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(res)
 }
 
 func NewResponse(data any) Response {
-	res := Response{
-		Code: "ok",
-		Msg:  "ok",
-		Data: data,
+	res := Response{Code: "ok", Msg: "ok", Data: data}
+
+	if res.Data == nil {
+		res.Data = map[string]any{}
 	}
 
 	if id, e := uuid.NewUUID(); e == nil {
@@ -29,4 +29,13 @@ func NewResponse(data any) Response {
 	}
 
 	return res
+}
+
+func FromError(err *Error) Response {
+	return Response{
+		RequestId: err.RequestId,
+		Code:      err.CodeStr,
+		Msg:       err.Msg,
+		Data:      map[string]any{},
+	}
 }
