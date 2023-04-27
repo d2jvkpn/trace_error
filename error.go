@@ -85,6 +85,16 @@ func (err *Error) Error() string {
 }
 */
 
+func (err *Error) XMsg(msg string) *Error {
+	err.Msg = msg
+	return err
+}
+
+func (err *Error) XCode(codeInt int, codeStr string) *Error {
+	err.CodeInt, err.CodeStr = codeInt, codeStr
+	return err
+}
+
 func (err *Error) String() string {
 	return fmt.Sprintf(
 		"cause=%q, code_int=%d, code_str=%q, msg=%q",
