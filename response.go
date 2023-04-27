@@ -2,12 +2,15 @@ package this_error
 
 import (
 	"encoding/json"
+
+	"github.com/google/uuid"
 )
 
 type Response struct {
-	Code string `json:"code"`
-	Msg  string `json:"msg"`
-	Data any    `json:"data"`
+	RequestId string `json:"requestId"`
+	Code      string `json:"code"`
+	Msg       string `json:"msg"`
+	Data      any    `json:"data"`
 }
 
 func (res Response) MarshalJSON() ([]byte, error) {
@@ -15,9 +18,15 @@ func (res Response) MarshalJSON() ([]byte, error) {
 }
 
 func NewResponse(data any) Response {
-	return Response{
+	res := Response{
 		Code: "ok",
 		Msg:  "ok",
 		Data: data,
 	}
+
+	if id, e := uuid.NewUUID(); e == nil {
+		res.RequestId = id.String()
+	}
+
+	return res
 }

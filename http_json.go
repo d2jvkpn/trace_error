@@ -11,17 +11,19 @@ type HttpJSON interface {
 
 func FromError(err *Error) Response {
 	return Response{
-		Code: err.CodeStr,
-		Msg:  err.Msg,
-		Data: map[string]any{},
+		RequestId: err.RequestId,
+		Code:      err.CodeStr,
+		Msg:       err.Msg,
+		Data:      map[string]any{},
 	}
 }
 
 func (err *Error) IntoResponse() Response {
 	return Response{
-		Code: err.CodeStr,
-		Msg:  err.Msg,
-		Data: map[string]any{},
+		RequestId: err.RequestId,
+		Code:      err.CodeStr,
+		Msg:       err.Msg,
+		Data:      map[string]any{},
 	}
 }
 

@@ -6,18 +6,18 @@ import (
 )
 
 func fna() (err *Error) {
-	e := fmt.Errorf("no user")
-	return NewError(e, 400, "not_found")
+	e := fmt.Errorf("invalid page number")
+	return NewError(e, 400, "bad_request")
 }
 
 func fnb() (err *Error) {
-	e := fmt.Errorf("no user")
-	return NewError(e, 400, "not_found", Skip(2))
+	e := fmt.Errorf("unmarshal failed")
+	return NewError(e, 400, "unmarshal_failed", Skip(2))
 }
 
 func fnc1() (err *Error) {
 	e := fmt.Errorf("no user")
-	return NewError(e, 400, "not_found", Skip(2))
+	return NewError(e, 404, "not_found", Skip(2))
 }
 
 func fnc2() (err *Error) {
