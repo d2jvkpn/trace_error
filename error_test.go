@@ -26,22 +26,30 @@ func fnc2() (err *Error) {
 
 func fnc3() (err *Error) {
 	err = fnc1()
-	err.UpdateTrace()
+	err.Update()
 	return err
+}
+
+func func4() (err *Error) {
+	e := fmt.Errorf("an error")
+	return NewError(e, 503, "service_unavailable", Skip(-1))
 }
 
 func Test01(t *testing.T) {
 	var err *Error
 
 	err = fna()
-	fmt.Printf("==> fna\nError: %s\nTrace: %s\n", err, err.Trace())
+	fmt.Printf("==> fna\n%s\n", err.Describe())
 
 	err = fnb()
-	fmt.Printf("==> fnb\nError: %s\nTrace: %s\n", err, err.Trace())
+	fmt.Printf("==> fnb\n%s\n", err.Describe())
 
 	err = fnc2()
-	fmt.Printf("==> fnc2\nError: %s\nTrace: %s\n", err, err.Trace())
+	fmt.Printf("==> fnc2\n%s\n", err.Describe())
 
 	err = fnc3()
-	fmt.Printf("==> fna3\nError: %s\nTrace: %s\n", err, err.Trace())
+	fmt.Printf("==> fna3\n%s\n", err.Describe())
+
+	err = func4()
+	fmt.Printf("==> fna4\n%s\n", err.Describe())
 }

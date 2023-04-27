@@ -87,14 +87,22 @@ func (err *Error) Error() string {
 
 func (err *Error) String() string {
 	return fmt.Sprintf(
-		"cause: %q, code_int: %d, code_str: %q, msg: %q",
+		"cause=%q, code_int=%d, code_str=%q, msg=%q",
 		err.Cause.Error(), err.CodeInt, err.CodeStr, err.Msg,
 	)
 }
 
 func (err *Error) Trace() string {
+	if err.Fn == "" {
+		return ""
+	}
+
 	return fmt.Sprintf(
-		"skip: %d, fn: %s, file: %q, line: %d",
+		"skip=%d, fn=%q, file=%q, line=%d",
 		err.Skip, err.Fn, err.File, err.Line,
 	)
+}
+
+func (err *Error) Describe() string {
+	return fmt.Sprintf("Error: %s\nTrace: %s", err, err.Trace())
 }
