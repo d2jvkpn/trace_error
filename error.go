@@ -59,7 +59,7 @@ func NewError(cause error, codeInt int, codeStr string, opts ...Option) (err *Er
 	return err
 }
 
-func (err *Error) UpdateTrace() bool {
+func (err *Error) Update() bool {
 	if err.Skip <= 0 {
 		return false
 	}
