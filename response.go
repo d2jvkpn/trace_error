@@ -14,7 +14,7 @@ func (res Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(res)
 }
 
-func OkResponse(data any) Response {
+func DefaultResponse(data any) Response {
 	return Response{
 		Code: "ok",
 		Msg:  "ok",
@@ -35,5 +35,9 @@ func (err *Error) HttpJSON() (int, json.Marshaler) {
 }
 
 func (res *Response) HttpJSON() (int, json.Marshaler) {
+	if res.Data == nil {
+		res.Data = map[string]any{}
+	}
+
 	return 200, res
 }
