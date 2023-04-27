@@ -14,38 +14,10 @@ func (res Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(res)
 }
 
-func DefaultResponse(data any) Response {
+func NewResponse(data any) Response {
 	return Response{
 		Code: "ok",
 		Msg:  "ok",
 		Data: data,
 	}
-}
-
-func FromError(err *Error) Response {
-	return Response{
-		Code: err.CodeStr,
-		Msg:  err.Msg,
-		Data: map[string]any{},
-	}
-}
-
-func (err *Error) IntoResponse() Response {
-	return Response{
-		Code: err.CodeStr,
-		Msg:  err.Msg,
-		Data: map[string]any{},
-	}
-}
-
-func (err *Error) HttpJSON() (int, json.Marshaler) {
-	return err.CodeInt, FromError(err)
-}
-
-func (res *Response) HttpJSON() (int, json.Marshaler) {
-	if res.Data == nil {
-		res.Data = map[string]any{}
-	}
-
-	return 200, res
 }
