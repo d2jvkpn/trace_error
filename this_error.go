@@ -47,6 +47,10 @@ func NewError(cause error, codeInt int, codeStr string, opts ...Option) (err *Er
 		_ = v(err)
 	}
 
+	if err.Skip < 0 {
+		return err
+	}
+
 	fn, file, line, ok := runtime.Caller(err.Skip)
 	if !ok {
 		return err
@@ -83,7 +87,7 @@ func (err *Error) String() string {
 func (err *Error) Trace() string {
 	return fmt.Sprintf(
 		"Skip: %d, Fn: %s, File: %q, Line: %d",
-		err.CodeInt, err.Fn, err.File, err.Line,
+		err.Skip, err.Fn, err.File, err.Line,
 	)
 }
 
