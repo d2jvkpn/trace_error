@@ -80,6 +80,15 @@ func (err *Error) UpdateTrace() bool {
 	return true
 }
 
+/*
+func (err *Error) Error() string {
+	return fmt.Sprintf(
+		"Cause: %q, CodeInt: %d, CodeStr: %q, Msg: %q",
+		err.Cause.Error(), err.CodeInt, err.CodeStr, err.Msg,
+	)
+}
+*/
+
 func (err *Error) String() string {
 	return fmt.Sprintf(
 		"Cause: %q, CodeInt: %d, CodeStr: %q, Msg: %q",
@@ -92,14 +101,4 @@ func (err *Error) Trace() string {
 		"Skip: %d, Fn: %s, File: %q, Line: %d",
 		err.Skip, err.Fn, err.File, err.Line,
 	)
-}
-
-func (err *Error) HttpResponse() (int, map[string]any) {
-	body := map[string]any{
-		"code": err.CodeStr,
-		"msg":  err.Msg,
-		"data": map[string]any{},
-	}
-
-	return err.CodeInt, body
 }
