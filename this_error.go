@@ -81,7 +81,10 @@ func (err *Error) UpdateTrace() bool {
 }
 
 func (err *Error) String() string {
-	return fmt.Sprintf("CodeInt: %d, CodeStr: %q, Msg: %q", err.CodeInt, err.CodeStr, err.Msg)
+	return fmt.Sprintf(
+		"Cause: %q, CodeInt: %d, CodeStr: %q, Msg: %q",
+		err.Cause.Error(), err.CodeInt, err.CodeStr, err.Msg,
+	)
 }
 
 func (err *Error) Trace() string {
