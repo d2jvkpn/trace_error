@@ -53,3 +53,11 @@ func Test01(t *testing.T) {
 	err = func4()
 	fmt.Printf("==> fna4\n%s\n", err.Describe())
 }
+
+func Test02(t *testing.T) {
+	check := func(d any) {
+		fmt.Println(d == nil)
+	}
+
+	check(nil)
+}

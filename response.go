@@ -30,6 +30,14 @@ func FromError(err *Error) Response {
 	}
 }
 
+func (err *Error) IntoResponse() Response {
+	return Response{
+		Code: err.CodeStr,
+		Msg:  err.Msg,
+		Data: map[string]any{},
+	}
+}
+
 func (err *Error) HttpJSON() (int, json.Marshaler) {
 	return err.CodeInt, FromError(err)
 }
