@@ -13,7 +13,7 @@ type Response struct {
 	Data      any    `json:"data"`
 }
 
-type ResponeOption func(*Response)
+type ResponseOption func(*Response)
 
 /*
 func (res *Response) MarshalJSON() ([]byte, error) {
@@ -26,13 +26,13 @@ func (res *Response) XRequestId(requestId string) *Response {
 	return res
 }
 
-func RequestId(requestId string) ResponeOption {
+func RequestId(requestId string) ResponseOption {
 	return func(res *Response) {
 		res.RequestId = requestId
 	}
 }
 
-func NewResponse(data any, opts ...ResponeOption) Response {
+func NewResponse(data any, opts ...ResponseOption) Response {
 	res := Response{Code: "ok", Msg: "ok", Data: data}
 
 	for _, opt := range opts {
@@ -52,7 +52,7 @@ func NewResponse(data any, opts ...ResponeOption) Response {
 	return res
 }
 
-func (err *Error) IntoResponse(opts ...ResponeOption) Response {
+func (err *Error) IntoResponse(opts ...ResponseOption) Response {
 	res := Response{
 		Code: err.CodeStr,
 		Msg:  err.Msg,
@@ -66,7 +66,7 @@ func (err *Error) IntoResponse(opts ...ResponeOption) Response {
 	return res
 }
 
-func FromError(err *Error, opts ...ResponeOption) Response {
+func FromError(err *Error, opts ...ResponseOption) Response {
 	res := Response{
 		Code: err.CodeStr,
 		Msg:  err.Msg,
