@@ -117,11 +117,3 @@ func (err *Error) Trace() string {
 func (err *Error) Describe() string {
 	return fmt.Sprintf("Error: %s\nTrace: %s", err, err.Trace())
 }
-
-func (err *Error) IntoResponse() *Response {
-	return &Response{
-		Code: err.CodeStr,
-		Msg:  err.Msg,
-		Data: map[string]any{},
-	}
-}

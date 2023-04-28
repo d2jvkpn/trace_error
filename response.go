@@ -52,6 +52,20 @@ func NewResponse(data any, opts ...ResponeOption) Response {
 	return res
 }
 
+func (err *Error) IntoResponse(opts ...ResponeOption) Response {
+	res := Response{
+		Code: err.CodeStr,
+		Msg:  err.Msg,
+		Data: map[string]any{},
+	}
+
+	for _, opt := range opts {
+		opt(&res)
+	}
+
+	return res
+}
+
 func FromError(err *Error, opts ...ResponeOption) Response {
 	res := Response{
 		Code: err.CodeStr,
