@@ -4,17 +4,14 @@ import (
 	"fmt"
 	"path/filepath"
 	"runtime"
-
-	"github.com/google/uuid"
 )
 
 type Error struct {
 	Cause error `json:"cause"`
 
-	RequestId string `json:"requestId"`
-	CodeInt   int    `json:"codeInt"`
-	CodeStr   string `json:"codeStr"`
-	Msg       string `json:"msg"`
+	CodeInt int    `json:"codeInt"`
+	CodeStr string `json:"codeStr"`
+	Msg     string `json:"msg"`
 
 	Skip int    `json:"skip"`
 	Fn   string `json:"fn"`
@@ -22,28 +19,22 @@ type Error struct {
 	Line int    `json:"line"`
 }
 
-// type Option func(*Error) bool
-type Option func(*Error)
+// type ErrorOption func(*Error) bool
+type ErrorOption func(*Error)
 
-func Msg(msg string) Option {
+func Msg(msg string) ErrorOption {
 	return func(e *Error) {
 		e.Msg = msg
 	}
 }
 
-func Skip(skip int) Option {
+func Skip(skip int) ErrorOption {
 	return func(e *Error) {
 		e.Skip = skip
 	}
 }
 
-func Uuid(requestId string) Option {
-	return func(e *Error) {
-		e.RequestId = requestId
-	}
-}
-
-func NewError(cause error, codeInt int, codeStr string, opts ...Option) (err *Error) {
+func NewError(cause error, codeInt int, codeStr string, opts ...ErrorOption) (err *Error) {
 	if cause == nil {
 		return nil
 	}
@@ -51,12 +42,6 @@ func NewError(cause error, codeInt int, codeStr string, opts ...Option) (err *Er
 	err = &Error{Cause: cause, CodeInt: codeInt, CodeStr: codeStr, Msg: "...", Skip: 1}
 	for _, v := range opts {
 		v(err)
-	}
-
-	if err.RequestId == "" {
-		if id, e := uuid.NewUUID(); e == nil {
-			err.RequestId = id.String()
-		}
 	}
 
 	if err.Skip < 0 {
@@ -111,15 +96,10 @@ func (err *Error) XCode(codeInt int, codeStr string) *Error {
 	return err
 }
 
-func (err *Error) XRequestId(requestId string) *Error {
-	err.RequestId = requestId
-	return err
-}
-
 func (err *Error) String() string {
 	return fmt.Sprintf(
-		"cause=%q, request_id=%q, code_int=%d, code_str=%q, msg=%q",
-		err.Cause.Error(), err.RequestId, err.CodeInt, err.CodeStr, err.Msg,
+		"cause=%q, code_int=%d, code_str=%q, msg=%q",
+		err.Cause.Error(), err.CodeInt, err.CodeStr, err.Msg,
 	)
 }
 
@@ -140,9 +120,8 @@ func (err *Error) Describe() string {
 
 func (err *Error) IntoResponse() *Response {
 	return &Response{
-		RequestId: err.RequestId,
-		Code:      err.CodeStr,
-		Msg:       err.Msg,
-		Data:      map[string]any{},
+		Code: err.CodeStr,
+		Msg:  err.Msg,
+		Data: map[string]any{},
 	}
 }
