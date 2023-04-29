@@ -115,5 +115,11 @@ func (err *Error) Trace() string {
 }
 
 func (err *Error) Describe() string {
-	return fmt.Sprintf("Error: %s\nTrace: %s", err, err.Trace())
+	str := err.String()
+	trace := err.Trace()
+
+	if trace == "" {
+		return str
+	}
+	return fmt.Sprintf("%s, %s", str, trace)
 }
