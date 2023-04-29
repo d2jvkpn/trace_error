@@ -61,3 +61,9 @@ func Test02(t *testing.T) {
 
 	check(nil)
 }
+
+func Test03(t *testing.T) {
+	e := fmt.Errorf("an error")
+	err := NewError(e, 503, "service_unavailable")
+	fmt.Println(err.Describe())
+}

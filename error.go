@@ -109,8 +109,8 @@ func (err *Error) Trace() string {
 	}
 
 	return fmt.Sprintf(
-		"skip=%d, fn=%q, file=%q, line=%d",
-		err.Skip, err.Fn, err.File, err.Line,
+		"fn=%q, file=%q, line=%d, skip=%d",
+		err.Fn, err.File, err.Line, err.Skip,
 	)
 }
 
