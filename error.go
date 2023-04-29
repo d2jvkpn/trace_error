@@ -60,21 +60,18 @@ func NewError(cause error, codeInt int, codeStr string, opts ...ErrorOption) (er
 	return err
 }
 
-func (err *Error) Update() bool {
-	if err.Skip <= 0 {
-		return false
-	}
-	err.Skip -= 1
+func (err *Error) ResetTrace() *Error {
+	err.Skip = 1
 
 	fn, file, line, ok := runtime.Caller(err.Skip)
 	if !ok {
-		return false
+		return err
 	}
 	err.Line = line
 	err.Fn = runtime.FuncForPC(fn).Name()
 	err.File = filepath.Base(file)
 
-	return true
+	return err
 }
 
 /*

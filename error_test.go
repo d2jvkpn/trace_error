@@ -26,8 +26,16 @@ func fnc2() (err *Error) {
 
 func fnc3() (err *Error) {
 	err = fnc1()
-	err.Update()
+	err.ResetTrace()
 	return err
+}
+
+func fnc4() (err *Error) {
+	return fnc2()
+}
+
+func fnc5() (err *Error) {
+	return fnc2()
 }
 
 func func4() (err *Error) {
@@ -63,10 +71,21 @@ func Test02(t *testing.T) {
 }
 
 func Test03(t *testing.T) {
-	e := fmt.Errorf("an error")
-	err := NewError(e, 503, "service_unavailable")
+	var (
+		e   error
+		err *Error
+	)
+
+	e = fmt.Errorf("an error")
+	err = NewError(e, 503, "service_unavailable")
 	fmt.Println(err.Describe())
 
 	err = NewError(e, 503, "service_unavailable", Skip(-4))
+	fmt.Println(err.Describe())
+
+	fmt.Println(">>> func5")
+	err = fnc5()
+	fmt.Println(err.Describe())
+	err.ResetTrace()
 	fmt.Println(err.Describe())
 }
