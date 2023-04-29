@@ -56,11 +56,14 @@ func (err *Error) IntoResponse(opts ...ResponseOption) Response {
 	res := Response{
 		Code: err.CodeStr,
 		Msg:  err.Msg,
-		Data: map[string]any{},
 	}
 
 	for _, opt := range opts {
 		opt(&res)
+	}
+
+	if res.Data == nil {
+		res.Data = map[string]any{}
 	}
 
 	return res
@@ -70,11 +73,14 @@ func FromError(err *Error, opts ...ResponseOption) Response {
 	res := Response{
 		Code: err.CodeStr,
 		Msg:  err.Msg,
-		Data: map[string]any{},
 	}
 
 	for _, opt := range opts {
 		opt(&res)
+	}
+
+	if res.Data == nil {
+		res.Data = map[string]any{}
 	}
 
 	return res
