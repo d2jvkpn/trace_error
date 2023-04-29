@@ -60,7 +60,7 @@ func NewError(cause error, codeInt int, codeStr string, opts ...ErrorOption) (er
 	return err
 }
 
-func (err *Error) ResetTrace() *Error {
+func (err *Error) Retrace() *Error {
 	err.Skip = 1
 
 	fn, file, line, ok := runtime.Caller(err.Skip)
