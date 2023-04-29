@@ -1,2 +1,2 @@
-# this_error
-a traceable error in golang
+# trace_error
+A traceable error implement in golang
