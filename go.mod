@@ -1,4 +1,4 @@
-module github.com/d2jvkpn/this_error
+module github.com/d2jvkpn/trace_error
 
 go 1.20
 
