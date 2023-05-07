@@ -1,9 +1,8 @@
 package trace_error
 
 import (
-	// "encoding/json"
-
-	"github.com/google/uuid"
+// "encoding/json"
+// "github.com/google/uuid"
 )
 
 type Response struct {
@@ -43,11 +42,13 @@ func NewResponse(data any, opts ...ResponseOption) Response {
 		res.Data = map[string]any{}
 	}
 
-	if res.RequestId == "" {
-		if id, e := uuid.NewUUID(); e == nil {
-			res.RequestId = id.String()
+	/*
+		if res.RequestId == "" {
+			if id, e := uuid.NewUUID(); e == nil {
+				res.RequestId = id.String()
+			}
 		}
-	}
+	*/
 
 	return res
 }
