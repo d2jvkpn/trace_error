@@ -34,6 +34,12 @@ func Skip(skip int) ErrorOption {
 	}
 }
 
+func NoTrace() ErrorOption {
+	return func(e *Error) {
+		e.Skip = -1
+	}
+}
+
 func NewError(cause error, codeInt int, codeStr string, opts ...ErrorOption) (err *Error) {
 	if cause == nil {
 		return nil
@@ -44,7 +50,7 @@ func NewError(cause error, codeInt int, codeStr string, opts ...ErrorOption) (er
 		v(err)
 	}
 
-	if err.Skip < 0 {
+	if err.Skip <= 0 {
 		return err
 	}
 
