@@ -89,6 +89,14 @@ func (err *Error) Error() string {
 }
 */
 
+func (err *Error) XCause(e error) *Error {
+	if e == nil {
+		return err
+	}
+	err.Cause = e
+	return err
+}
+
 func (err *Error) XMsg(msg string) *Error {
 	err.Msg = msg
 	return err
