@@ -102,8 +102,8 @@ func (err *Error) XMsg(msg string) *Error {
 	return err
 }
 
-func (err *Error) XCode(codeInt int, codeStr string) *Error {
-	err.CodeInt, err.CodeStr = codeInt, codeStr
+func (err *Error) XCode(codeInt int) *Error {
+	err.CodeInt = codeInt
 	return err
 }
 
