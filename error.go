@@ -6,6 +6,7 @@ import (
 	"runtime"
 )
 
+// Don't alter field CodeStr for predefined Error
 type Error struct {
 	Cause error `json:"cause"`
 
@@ -132,5 +133,5 @@ func (err *Error) Describe() string {
 	if trace == "" {
 		return str
 	}
-	return fmt.Sprintf("%s, %s", str, trace)
+	return fmt.Sprintf("%s; %s", str, trace)
 }
